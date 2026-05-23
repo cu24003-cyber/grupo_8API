@@ -1,6 +1,9 @@
 use dotenvy::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
+use actix_web::{web, App, HttpServer};
+
+mod instructores;
 
 #[tokio::main]
 async fn main() -> Result<(), sqlx::Error> {
@@ -9,8 +12,6 @@ async fn main() -> Result<(), sqlx::Error> {
     let database_url = env::var("DATABASE_URL")
         .expect("DATABASE_URL no encontrada");
 
-    println!("URL: {:?}", database_url);
-
     let pool = PgPoolOptions::new()
         .max_connections(5)
         .connect(&database_url)
@@ -18,5 +19,13 @@ async fn main() -> Result<(), sqlx::Error> {
 
     println!("Conectado a Supabase!");
 
-    Ok(())
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(pool.clone()))
+            .configure(instructores::controller::config)
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
+    .map_err(|e| sqlx::Error::Configuration(e.to_string().into()))
 }

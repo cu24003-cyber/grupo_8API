@@ -1,7 +1,7 @@
 use actix_web::{web, HttpResponse, Responder};
 use sqlx::PgPool;
-use crate::instructores::model::{CreateInstructor, UpdateInstructor};
-use crate::instructores::service;
+use crate::models::instructor::{CreateInstructor, UpdateInstructor};
+use crate::service::instructor_service as service;
 
 pub async fn get_all(pool: web::Data<PgPool>) -> impl Responder {
     match service::obtener_todos(pool.get_ref()).await {

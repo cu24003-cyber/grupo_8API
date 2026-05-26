@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
-
+use chrono::NaiveDate;
 #[derive(Debug, Clone, Serialize, Deserialize, FromRow, PartialEq)]
 pub struct AsistenciaClase {
     pub id_asistencia: i32,

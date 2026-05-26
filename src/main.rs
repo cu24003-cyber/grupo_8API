@@ -7,6 +7,7 @@ mod models;
 mod repository;
 mod service;
 
+
 #[tokio::main]
 async fn main() -> Result<(), sqlx::Error> {
     dotenv().ok();
@@ -25,6 +26,7 @@ async fn main() -> Result<(), sqlx::Error> {
         App::new()
             .app_data(web::Data::new(pool.clone()))
            .configure(controller::instructor_controller::config)
+           .configure(controller::clase_controller::config)
     })
     .bind("127.0.0.1:8080")?
     .run()

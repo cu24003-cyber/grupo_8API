@@ -2,8 +2,10 @@ use dotenvy::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
 use actix_web::{web, App, HttpServer};
-
-mod instructores;
+mod controller;
+mod models;
+mod repository;
+mod service;
 
 #[tokio::main]
 async fn main() -> Result<(), sqlx::Error> {
@@ -22,7 +24,7 @@ async fn main() -> Result<(), sqlx::Error> {
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(pool.clone()))
-            .configure(instructores::controller::config)
+           .configure(controller::instructor_controller::config)
     })
     .bind("127.0.0.1:8080")?
     .run()

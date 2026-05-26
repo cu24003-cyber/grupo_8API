@@ -1,6 +1,6 @@
 use sqlx::{PgPool, Row};
 
-use crate::models::{ActualizarAsistenciaClase, AsistenciaClase, NuevaAsistenciaClase};
+use crate::models::asistencia_clases::{ActualizarAsistenciaClase, AsistenciaClase, NuevaAsistenciaClase};
 
 pub struct AsistenciaRepository {
     pool: PgPool,

@@ -1,5 +1,5 @@
 use sqlx::PgPool;
-use crate::instructores::model::{Instructor, CreateInstructor, UpdateInstructor};
+use crate::models::instructor::{Instructor, CreateInstructor, UpdateInstructor};
 
 pub async fn get_all(pool: &PgPool) -> Result<Vec<Instructor>, sqlx::Error> {
     let instructores = sqlx::query_as::<_, Instructor>(
@@ -51,8 +51,8 @@ pub async fn update(pool: &PgPool, id: i32, data: UpdateInstructor) -> Result<Op
          WHERE id_instructor = $3
          RETURNING id_instructor, nombre, especialidad"
     )
-    .bind(&nombre)
-    .bind(&especialidad)
+    .bind(nombre)
+    .bind(especialidad)
     .bind(id)
     .fetch_one(pool)
     .await?;

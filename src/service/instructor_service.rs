@@ -1,6 +1,6 @@
 use sqlx::PgPool;
-use crate::instructores::model::{Instructor, CreateInstructor, UpdateInstructor};
-use crate::instructores::repository;
+use crate::models::instructor::{Instructor, CreateInstructor, UpdateInstructor};
+use crate::repository::instructor_repository as repository;
 
 pub async fn obtener_todos(pool: &PgPool) -> Result<Vec<Instructor>, sqlx::Error> {
     repository::get_all(pool).await

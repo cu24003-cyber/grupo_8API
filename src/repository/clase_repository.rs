@@ -3,7 +3,7 @@ use crate::models::clase::{Clase, CreateClase, UpdateClase};
 
 pub async fn get_all(pool: &PgPool) -> Result<Vec<Clase>, sqlx::Error> {
     let clases = sqlx::query_as::<_, Clase>(
-        "SELECT id_clase, nombre, id_instructor, horario FROM clases"
+        "SELECT id_clase, nombre_clase, id_instructor, horario FROM clases"
     )
     .fetch_all(pool)
     .await?;
@@ -12,7 +12,7 @@ pub async fn get_all(pool: &PgPool) -> Result<Vec<Clase>, sqlx::Error> {
 }
 pub async fn get_by_id(pool: &PgPool, id: i32) -> Result<Option<Clase>, sqlx::Error> {
     let clase = sqlx::query_as::<_, Clase>(
-        "SELECT id_clase, nombre, id_instructor, horario FROM clases WHERE id_clase = $1"
+        "SELECT id_clase, nombre_clase, id_instructor, horario FROM clases WHERE id_clase = $1"
     )
     .bind(id)
     .fetch_optional(pool)
@@ -22,11 +22,11 @@ pub async fn get_by_id(pool: &PgPool, id: i32) -> Result<Option<Clase>, sqlx::Er
 }
 pub async fn create(pool: &PgPool, data: CreateClase) -> Result<Clase, sqlx::Error> {
     let clase = sqlx::query_as::<_, Clase>(
-        "INSERT INTO clases (nombre, id_instructor, horario)
+        "INSERT INTO clases (nombre_clase, id_instructor, horario)
          VALUES ($1, $2, $3)
-         RETURNING id_clase, nombre, id_instructor, horario"
+         RETURNING id_clase, nombre_clase, id_instructor, horario"
     )
-    .bind(&data.nombre)
+    .bind(&data.nombre_clase)
     .bind(data.id_instructor)
     .bind(&data.horario)
     .fetch_one(pool)
@@ -41,16 +41,16 @@ pub async fn update(pool: &PgPool, id: i32, data: UpdateClase) -> Result<Option<
         None => return Ok(None),
     };
 
-    let nombre = data.nombre.unwrap_or(actual.nombre);
+    let nombre_clase = data.nombre_clase.unwrap_or(actual.nombre_clase);
     let id_instructor = data.id_instructor.or(actual.id_instructor);
     let horario = data.horario.unwrap_or(actual.horario);
 
     let clase = sqlx::query_as::<_, Clase>(
-        "UPDATE clases SET nombre = $1, id_instructor = $2, horario = $3
+        "UPDATE clases SET nombre_clase = $1, id_instructor = $2, horario = $3
          WHERE id_clase = $4
-         RETURNING id_clase, nombre, id_instructor, horario"
+         RETURNING id_clase, nombre_clase, id_instructor, horario"
     )
-    .bind(nombre)
+    .bind(nombre_clase)
     .bind(id_instructor)
     .bind(horario)
     .bind(id)

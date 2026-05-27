@@ -3,6 +3,7 @@ use sqlx::PgPool;
 use crate::models::clase::{ CreateClase, UpdateClase};
 use crate::service::clase_service as service;
 
+
 pub async fn get_all(pool: web::Data<PgPool>) -> impl Responder {
     match service::obtener_todos(pool.get_ref()).await {
         Ok(clases) => HttpResponse::Ok().json(clases),

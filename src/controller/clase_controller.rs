@@ -57,7 +57,7 @@ pub async fn delete(
 
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
-        web::scope("/clases")
+        web::scope("api/clases")
             .route("", web::get().to(get_all))
             .route("/{id}", web::get().to(get_by_id))
             .route("", web::post().to(create))

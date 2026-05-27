@@ -61,7 +61,7 @@ pub async fn delete(pool: web::Data<PgPool>, path: web::Path<i32>) -> impl Respo
 
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
-        web::scope("/asistencias-clases")
+        web::scope("api/asistencias-clases")
             .route("", web::get().to(get_all))
             .route("/{id}", web::get().to(get_by_id))
             .route("", web::post().to(create))

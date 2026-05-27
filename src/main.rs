@@ -27,6 +27,7 @@ async fn main() -> Result<(), sqlx::Error> {
             .app_data(web::Data::new(pool.clone()))
            .configure(controller::instructor_controller::config)
            .configure(controller::clase_controller::config)
+           .configure(controller::asistencia_clases_controller::config)
     })
     .bind("127.0.0.1:8080")?
     .run()

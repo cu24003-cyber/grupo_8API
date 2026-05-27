@@ -2,12 +2,14 @@ use actix_web::{web, HttpResponse, Responder};
 use sqlx::PgPool;
 use crate::models::clase::{ CreateClase, UpdateClase};
 use crate::service::clase_service as service;
+
 pub async fn get_all(pool: web::Data<PgPool>) -> impl Responder {
     match service::obtener_todos(pool.get_ref()).await {
         Ok(clases) => HttpResponse::Ok().json(clases),
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
 }
+
 pub async fn get_by_id(pool: web::Data<PgPool>, path: web::Path<i32>) -> impl Responder {
     let id = path.into_inner();
     match service::obtener_por_id(pool.get_ref(), id).await {
@@ -16,6 +18,7 @@ pub async fn get_by_id(pool: web::Data<PgPool>, path: web::Path<i32>) -> impl Re
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
 }
+
 pub async fn create(
     pool: web::Data<PgPool>,
     body: web::Json<CreateClase>,
@@ -25,6 +28,7 @@ pub async fn create(
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
 }
+
 pub async fn update(
     pool: web::Data<PgPool>,
     path: web::Path<i32>,
@@ -37,6 +41,7 @@ pub async fn update(
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
 }
+
 pub async fn delete(
     pool: web::Data<PgPool>,
     path: web::Path<i32>,
@@ -48,6 +53,7 @@ pub async fn delete(
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
 }
+
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/clases")

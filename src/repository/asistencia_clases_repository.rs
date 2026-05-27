@@ -1,11 +1,8 @@
 use sqlx::{PgPool, Row};
-
 use crate::models::asistencia_clases::{ActualizarAsistenciaClase, AsistenciaClase, NuevaAsistenciaClase};
-
 pub struct AsistenciaRepository {
     pool: PgPool,
 }
-
 impl AsistenciaRepository {
     pub fn new(pool: PgPool) -> Self {
         Self { pool }

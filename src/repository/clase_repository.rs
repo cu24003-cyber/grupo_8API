@@ -10,6 +10,7 @@ pub async fn get_all(pool: &PgPool) -> Result<Vec<Clase>, sqlx::Error> {
 
     Ok(clases)
 }
+
 pub async fn get_by_id(pool: &PgPool, id: i32) -> Result<Option<Clase>, sqlx::Error> {
     let clase = sqlx::query_as::<_, Clase>(
         "SELECT id_clase, nombre_clase, id_instructor, horario FROM clases WHERE id_clase = $1"
@@ -20,6 +21,7 @@ pub async fn get_by_id(pool: &PgPool, id: i32) -> Result<Option<Clase>, sqlx::Er
 
     Ok(clase)
 }
+
 pub async fn create(pool: &PgPool, data: CreateClase) -> Result<Clase, sqlx::Error> {
     let clase = sqlx::query_as::<_, Clase>(
         "INSERT INTO clases (nombre_clase, id_instructor, horario)
@@ -34,6 +36,7 @@ pub async fn create(pool: &PgPool, data: CreateClase) -> Result<Clase, sqlx::Err
 
     Ok(clase)
 }
+
 pub async fn update(pool: &PgPool, id: i32, data: UpdateClase) -> Result<Option<Clase>, sqlx::Error> {
     let actual = get_by_id(pool, id).await?;
     let actual = match actual {
@@ -59,6 +62,7 @@ pub async fn update(pool: &PgPool, id: i32, data: UpdateClase) -> Result<Option<
 
     Ok(Some(clase))
 }
+
 pub async fn delete(pool: &PgPool, id: i32) -> Result<bool, sqlx::Error> {
     let result = sqlx::query(
         "DELETE FROM clases WHERE id_clase = $1"

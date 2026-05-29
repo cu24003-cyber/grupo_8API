@@ -1,4 +1,4 @@
-use sqlx::{PgPool, Row, query_as};
+use sqlx::{PgPool, query_as};
 use crate::models::asistencia_clases::{
     ActualizarAsistenciaClase, AsistenciaClase, NuevaAsistenciaClase,
 };

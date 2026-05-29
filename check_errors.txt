@@ -1,0 +1,62 @@
+    Checking grupo_8API v0.1.0 (/home/raul1114/Documentos/Grupo8API/grupo_8API)
+error: expected one of `:`, `@`, or `|`, found `)`
+ --> src/service/miembros_service.rs:6:35
+  |
+6 | pub async fn obtener_miembros(pool) State<PgPool> -> Json<Vec<Miembros>> {
+  |                                   ^ expected one of `:`, `@`, or `|`
+  |
+help: if this is a parameter name, give it a type
+  |
+6 | pub async fn obtener_miembros(pool: TypeName) State<PgPool> -> Json<Vec<Miembros>> {
+  |                                   ++++++++++
+help: if this is a type, explicitly ignore the parameter name
+  |
+6 | pub async fn obtener_miembros(_: pool) State<PgPool> -> Json<Vec<Miembros>> {
+  |                               ++
+
+error: expected one of `->`, `where`, or `{`, found `State`
+ --> src/service/miembros_service.rs:6:37
+  |
+6 | pub async fn obtener_miembros(pool) State<PgPool> -> Json<Vec<Miembros>> {
+  |                                     ^^^^^ expected one of `->`, `where`, or `{`
+
+error[E0433]: cannot find module or crate `axum` in this scope
+ --> src/controller/miembros_controller.rs:1:5
+  |
+1 | use axum::{
+  |     ^^^^ use of unresolved module or unlinked crate `axum`
+  |
+  = help: if you wanted to use a crate named `axum`, use `cargo add axum` to add it to your `Cargo.toml`
+
+error[E0432]: unresolved import `sqlx::PGPool`
+ --> src/repository/miembros_repository.rs:1:12
+  |
+1 | use sqlx::{PGPool, Row};
+  |            ^^^^^^ no `PGPool` in the root
+  |
+help: a similar name exists in the module
+  |
+1 - use sqlx::{PGPool, Row};
+1 + use sqlx::{PgPool, Row};
+  |
+
+error[E0432]: unresolved import `axum`
+ --> src/controller/miembros_controller.rs:1:5
+  |
+1 | use axum::{
+  |     ^^^^ use of unresolved module or unlinked crate `axum`
+  |
+  = help: if you wanted to use a crate named `axum`, use `cargo add axum` to add it to your `Cargo.toml`
+
+warning: unused import: `Row`
+ --> src/repository/asistencia_clases_repository.rs:1:20
+  |
+1 | use sqlx::{PgPool, Row, query_as};
+  |                    ^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+warning: `grupo_8API` (bin "grupo_8API") generated 1 warning
+error: could not compile `grupo_8API` (bin "grupo_8API") due to 5 previous errors; 1 warning emitted

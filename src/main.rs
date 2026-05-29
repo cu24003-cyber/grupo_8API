@@ -28,6 +28,7 @@ async fn main() -> Result<(), sqlx::Error> {
            .configure(controller::instructor_controller::config)
            .configure(controller::clase_controller::config)
            .configure(controller::asistencia_clases_controller::config)
+           .configure(controller::miembros_controller::config)
     })
     .bind("127.0.0.1:8080")?
     .run()
